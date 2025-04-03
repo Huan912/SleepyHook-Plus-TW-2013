@@ -3,6 +3,7 @@
 - Microsoft Visual Studio 2022 (v143)
 - Desktop development with C++
 - Windows SDK 10.0
+- [`HackShield-Emulator`](https://github.com/Huan912/HackShield-Emulator)
 
 ## Building
 

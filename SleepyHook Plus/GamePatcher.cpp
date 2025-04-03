@@ -114,6 +114,7 @@ void GamePatcher()
 	MH_InlineHook((void*)0x37297D80, HackShield::SetACInit, (void*&)HackShield::oSetACInit);
 	MH_InlineHook((void*)0x37442F60, HackShield::Hook2, (void*&)HackShield::oHook2);
 	WriteBytes((void*)0x37297AE2, (void*)"\xEB\x5D", 2); //HackShield
+	WriteBytes((void*)0x37298B40, (void*)"\xC3", 1); //HackShield
 
 	MH_InlineHook((void*)0x374405F0, HookFuncs::SocketManager__Constructor, (void*&)HookFuncs::oSocketManager__Constructor);
 	MH_InlineHook((void*)0x37444120, HookFuncs::IpRedirector, (void*&)HookFuncs::oIpRedirector);

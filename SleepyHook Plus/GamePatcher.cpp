@@ -287,12 +287,6 @@ DWORD WINAPI SubModulePatcher()
 	HookFuncs::oCOptionsDialog__OnCommand = reinterpret_cast<HookFuncs::COptionsDialog__OnCommand_t>(dwGameUI + 0x1E3220);
 	// Vtable hook
 	MH_WriteDWORD((void*)(dwGameUI + 0x2670CC), (DWORD)&HookFuncs::COptionsDialog__OnCommand);
-
-	// 隼雷(Thunderbolt)射擊貼圖修正
-	uintptr_t dwEV_HLDM_DecalGunshot = Utils::FindSignature("client.dll", "83 FE 25 74 ? 83 FE 29 74 ?");
-	if (!dwEV_HLDM_DecalGunshot)
-		WriteBytes((void*)(dwEV_HLDM_DecalGunshot + 3), (void*)"\x90\x90", 2);
-
 	return 1;
 }
 

@@ -135,6 +135,8 @@ int CALLBACK WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		}
 	}
 
+	SetProcessDPIAware();
+
 	WSAData WSAData;
 	WSAStartup(2, &WSAData);
 	registry->Init();

@@ -17,6 +17,7 @@
 #include <chrono>
 #include <thread>
 #pragma comment(lib, "ws2_32.lib")
+#pragma comment(lib, "imm32.lib")
 
 #include <wrect.h>
 #include <interface.h>

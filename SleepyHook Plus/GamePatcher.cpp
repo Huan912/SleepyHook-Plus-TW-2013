@@ -268,6 +268,19 @@ namespace HookFuncs
 		}
 		return ret;
 	}
+
+	// 文件名稱含有英文必須為小寫，並且打包的Nar名稱不得更改，如果要更改需要重新打包，因為Nar結構內會寫入完整的相對路徑
+	const char* szExtraNarFileNames[] = { "custom_nar" };
+
+	typedef int(__cdecl* FS_MountNarForGameDir_t)(const char* pszGameDir, const char* pszLang);
+	FS_MountNarForGameDir_t oFS_MountNarForGameDir = reinterpret_cast<FS_MountNarForGameDir_t>(0x3715BBD0);
+	int(__cdecl* oFS_MountAllNarFiles)();
+	int __cdecl FS_MountAllNarFiles()
+	{
+		for (int i = 0; i < ARRAYSIZE(szExtraNarFileNames); i++)
+			oFS_MountNarForGameDir(szExtraNarFileNames[i], "");
+		return oFS_MountAllNarFiles();
+	}
 }
 
 DWORD WINAPI SubModulePatcher()
@@ -326,6 +339,8 @@ void GamePatcher()
 	MH_InlineHook((void*)0x37442810, CSONMWrapper::CheckIsAge18, (void*&)CSONMWrapper::oCheckIsAge18);
 	MH_InlineHook((void*)0x372FBDB0, CSONMWrapper::COutPacket__SendLoginPacket, (void*&)CSONMWrapper::oCOutPacket__SendLoginPacket);
 	WriteBytes((void*)0x372207B0, (void*)"\x31\xC0", 2);
+
+	MH_InlineHook((void*)0x3715BD40, HookFuncs::FS_MountAllNarFiles, (void*&)HookFuncs::oFS_MountAllNarFiles);
 
 	CreateThread(nullptr, NULL, (LPTHREAD_START_ROUTINE)SubModulePatcher, nullptr, 0, nullptr);
 }

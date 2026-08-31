@@ -92,7 +92,9 @@ public:
 	virtual bool IsAppReadyForOfflinePlay(void) = 0;
 	virtual void AddPackFile(const char *pPath, const char *pathID = 0) = 0;
 	virtual void *OpenFromCacheForRead(const char *pFileName, const char *pOptions, const char *pathID = 0) = 0;
-
+	// --- CSO ---
+	virtual bool AddNarFile(const char* pNarPath, const char* pMountPoint) = 0;
+	virtual void SetNarBaseDir(const char* pDir) = 0;
 public:
 	bool FileExists(const char *pFileName, const char *pPathID);
 	bool IsFileWritable(char const *pFileName, const char *pPathID = 0);

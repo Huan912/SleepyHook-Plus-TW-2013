@@ -362,6 +362,11 @@ hook_t* MH_InlineHook(void* pOldFuncAddr, void* pNewFuncAddr, void*& pCallBackFu
 	return h;
 }
 
+hook_t* MH_InlineHook(uintptr_t pOldFuncAddr, void* pNewFuncAddr, void*& pCallBackFuncAddr)
+{
+	return MH_InlineHook((void*)pOldFuncAddr, pNewFuncAddr, pCallBackFuncAddr);
+}
+
 hook_t* MH_VFTHook(void* pClass, int iTableIndex, int iFuncIndex, void* pNewFuncAddr, void*& pCallBackFuncAddr)
 {
 	tagVTABLEDATA* info = new tagVTABLEDATA;

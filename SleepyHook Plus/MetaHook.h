@@ -61,6 +61,7 @@ void MH_ExitGame(int iResult);
 void MH_Shutdown(void);
 void MH_WriteDWORD(void* pAddress, DWORD dwValue);
 hook_t* MH_InlineHook(void* pOldFuncAddr, void* pNewFuncAddr, void*& pCallBackFuncAddr);
+hook_t* MH_InlineHook(uintptr_t pOldFuncAddr, void* pNewFuncAddr, void*& pCallBackFuncAddr);
 
 #include <IFileSystem.h>
 #include <ICommandLine.h>

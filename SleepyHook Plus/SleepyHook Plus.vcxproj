@@ -138,6 +138,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CommandLine.cpp" />
+    <ClCompile Include="Features\PacketFriend.cpp" />
+    <ClCompile Include="Features\PacketManager.cpp" />
     <ClCompile Include="GamePatcher.cpp" />
     <ClCompile Include="Interface.cpp" />
     <ClCompile Include="Launcher.cpp" />
@@ -149,6 +151,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Detours\detours.h" />
+    <ClInclude Include="Features\PacketFriend.h" />
+    <ClInclude Include="Features\PacketManager.h" />
+    <ClInclude Include="Features\PacketReader.h" />
     <ClInclude Include="GamePatcher.h" />
     <ClInclude Include="Interface\IBaseUI.h" />
     <ClInclude Include="Interface\IClientVGUI.h" />

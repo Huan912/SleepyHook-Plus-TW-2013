@@ -2,6 +2,7 @@
 #include "Main.h"
 #include "MetaHook.h"
 #include "Utils.h"
+#include "Features/PacketManager.h"
 
 unsigned long m_iHostIPAddress;
 unsigned short m_iHostPort;
@@ -323,24 +324,34 @@ void GamePatcher()
 	Utils::ConsolePrint("IP: %s\n", sIpAddr.c_str());
 	Utils::ConsolePrint("Port: %d\n", nPort);
 
-	MH_InlineHook((void*)0x37297D80, HackShield::SetACInit, (void*&)HackShield::oSetACInit);
-	MH_InlineHook((void*)0x37442F60, HackShield::Hook2, (void*&)HackShield::oHook2);
-	WriteBytes((void*)0x37297AE2, (void*)"\xEB\x5D", 2); //HackShield
-	WriteBytes((void*)0x37298B40, (void*)"\xC3", 1); //HackShield
+	// HackShield stuff
+	{
+		MH_InlineHook((void*)0x37297D80, HackShield::SetACInit, (void*&)HackShield::oSetACInit);
+		MH_InlineHook((void*)0x37442F60, HackShield::Hook2, (void*&)HackShield::oHook2);
+		WriteBytes((void*)0x37297AE2, (void*)"\xEB\x5D", 2); //HackShield
+		WriteBytes((void*)0x37298B40, (void*)"\xC3", 1); //HackShield
+	}
 
-	MH_InlineHook((void*)0x374405F0, HookFuncs::SocketManager__Constructor, (void*&)HookFuncs::oSocketManager__Constructor);
-	MH_InlineHook((void*)0x37444120, HookFuncs::IpRedirector, (void*&)HookFuncs::oIpRedirector);
-	MH_InlineHook((void*)0x371F4470, HookFuncs::HolePunchFuncSetServerInfo, (void*&)HookFuncs::oHolePunchFuncSetServerInfo);
+	// IP Redirect, Network stuff
+	{
+		MH_InlineHook((void*)0x374405F0, HookFuncs::SocketManager__Constructor, (void*&)HookFuncs::oSocketManager__Constructor);
+		MH_InlineHook((void*)0x37444120, HookFuncs::IpRedirector, (void*&)HookFuncs::oIpRedirector);
+		MH_InlineHook((void*)0x371F4470, HookFuncs::HolePunchFuncSetServerInfo, (void*&)HookFuncs::oHolePunchFuncSetServerInfo);
+	}
+
+	// NMCO, Login stuff
+	{
+		MH_InlineHook((void*)0x37442A60, CSONMWrapper::AuthUser, (void*&)CSONMWrapper::oCSONMWrapper__AuthUser);
+		MH_InlineHook((void*)0x37442810, CSONMWrapper::CheckIsAge18, (void*&)CSONMWrapper::oCheckIsAge18);
+		MH_InlineHook((void*)0x372FBDB0, CSONMWrapper::COutPacket__SendLoginPacket, (void*&)CSONMWrapper::oCOutPacket__SendLoginPacket);
+		WriteBytes((void*)0x372207B0, (void*)"\x31\xC0", 2);
+	}
 
 	MH_InlineHook((void*)0x372FFB10, RankLocationFix::RankSetPlayerInfo, (void*&)RankLocationFix::oRankSetPlayerInfo);
 	MH_InlineHook((void*)0x371EDDF0, HookFuncs::CGame__WndProc, (void*&)HookFuncs::oCGame__WndProc);
-
-	MH_InlineHook((void*)0x37442A60, CSONMWrapper::AuthUser, (void*&)CSONMWrapper::oCSONMWrapper__AuthUser);
-	MH_InlineHook((void*)0x37442810, CSONMWrapper::CheckIsAge18, (void*&)CSONMWrapper::oCheckIsAge18);
-	MH_InlineHook((void*)0x372FBDB0, CSONMWrapper::COutPacket__SendLoginPacket, (void*&)CSONMWrapper::oCOutPacket__SendLoginPacket);
-	WriteBytes((void*)0x372207B0, (void*)"\x31\xC0", 2);
-
 	MH_InlineHook((void*)0x3715BD40, HookFuncs::FS_MountAllNarFiles, (void*&)HookFuncs::oFS_MountAllNarFiles);
+
+	g_PacketManager.Initialize();
 
 	CreateThread(nullptr, NULL, (LPTHREAD_START_ROUTINE)SubModulePatcher, nullptr, 0, nullptr);
 }

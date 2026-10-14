@@ -22,6 +22,9 @@
     <Filter Include="Detours">
       <UniqueIdentifier>{71cf15e8-6dc6-4679-b21d-db09cfd2fca2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Features">
+      <UniqueIdentifier>{3cffd100-36b0-4e26-b99a-5c53651f50af}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Launcher.cpp">
@@ -50,6 +53,12 @@
     </ClCompile>
     <ClCompile Include="Utils.cpp">
       <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Features\PacketManager.cpp">
+      <Filter>Features</Filter>
+    </ClCompile>
+    <ClCompile Include="Features\PacketFriend.cpp">
+      <Filter>Features</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -169,6 +178,15 @@
     </ClInclude>
     <ClInclude Include="Utils.h">
       <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Features\PacketManager.h">
+      <Filter>Features</Filter>
+    </ClInclude>
+    <ClInclude Include="Features\PacketFriend.h">
+      <Filter>Features</Filter>
+    </ClInclude>
+    <ClInclude Include="Features\PacketReader.h">
+      <Filter>Features</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

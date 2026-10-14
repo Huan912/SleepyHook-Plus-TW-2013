@@ -30,3 +30,4 @@
 
 #include "Sys_Launcher.h"
 #include "LoadBlob.h"
+#include "Features/PacketReader.h"
